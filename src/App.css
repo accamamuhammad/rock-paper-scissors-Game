@@ -1,0 +1,12 @@
+dialog > button {
+  font-family: "barlow-light";
+}
+p,
+button,
+h3,
+a {
+  font-family: "barlow-medium";
+}
+h1 {
+  font-family: "barlow-bold";
+}
