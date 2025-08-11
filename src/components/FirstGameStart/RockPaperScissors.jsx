@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import rpsCSS from "./RockPaperScissors.module.css";
+import Logo from "../../../public/images/logo.svg";
+import ScissorsIcon from "../../../public/images/icon-scissors.svg";
+import RockIcon from "../../../public/images/icon-rock.svg";
+import PaperIcon from "../../../public/images/icon-paper.svg";
 
 const RockPaperScissors = () => {
   const [score, setScore] = useState(0);
@@ -71,7 +75,7 @@ const RockPaperScissors = () => {
         <h1>🤖Computer choosing</h1>
       </div>
       <div className={rpsCSS.ScoreDisplay}>
-        <img src="/images/logo.svg" alt="logo" />
+        <img src={Logo} alt="logo" />
         <div>
           <p>score</p>
           <h1>{score}</h1>
@@ -84,18 +88,18 @@ const RockPaperScissors = () => {
         }`}
       >
         <div className={rpsCSS.paper} onClick={() => handleClick("paper")}>
-          <img src="/images/icon-paper.svg" alt="paper" />
+          <img src={PaperIcon} alt="paper" />
         </div>
         <div className={rpsCSS.rod}></div>
         <div
           className={rpsCSS.scissors}
           onClick={() => handleClick("scissors")}
         >
-          <img src="/images/icon-scissors.svg" alt="scissors" />
+          <img src={ScissorsIcon} alt="scissors" />
         </div>
         <div className={rpsCSS.rod}></div>
         <div className={rpsCSS.rock} onClick={() => handleClick("rock")}>
-          <img src="/images/icon-rock.svg" alt="rock" />
+          <img src={RockIcon} alt="rock" />
         </div>
         <div className={rpsCSS.rod}></div>
       </div>
@@ -113,7 +117,7 @@ const RockPaperScissors = () => {
             }`}
           >
             <img
-              src={`/images/icon-${playersChoice}.svg`}
+              src={`/public/images/icon-${playersChoice}.svg`}
               alt="playersChoice"
             />
           </div>
@@ -137,7 +141,7 @@ const RockPaperScissors = () => {
             }`}
           >
             <img
-              src={`/images/icon-${computersChoice}.svg`}
+              src={`/public/images/icon-${computersChoice}.svg`}
               alt="computersChoice"
             />
           </div>
@@ -150,7 +154,7 @@ const RockPaperScissors = () => {
       {isModalOpen && (
         <dialog open>
           <h1>Rules</h1>
-          <img src="/images/image-rules.svg" alt="Rules" />
+          <img src="/public/images/image-rules.svg" alt="Rules" />
           <button onClick={closeModal}>x</button>
         </dialog>
       )}

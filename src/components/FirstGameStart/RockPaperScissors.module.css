@@ -33,7 +33,7 @@
 }
 .preloaderOn {
   z-index: 999;
-  width: 2000px;
+  width: 100%;
   height: 100vh;
   display: flex;
   position: absolute;
@@ -91,6 +91,8 @@
 }
 /*? Rules Styling */
 dialog {
+  width: 100%;
+  height: 100vh;
   margin: auto;
   border: none;
   row-gap: 10vh;
@@ -111,7 +113,7 @@ dialog > h1 {
 dialog > button {
   border: none;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 3rem;
   color: var(--ash-close-icon);
   background-color: transparent;
 }
