@@ -7,9 +7,9 @@ import RockPaperScissors from "./components/FirstGameStart/RockPaperScissors";
 
 function App() {
   return (
-    <>
+    <main>
       <RockPaperScissors />
-    </>
+    </main>
   );
 }
 
