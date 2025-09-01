@@ -15,37 +15,27 @@ const RockPaperScissors = () => {
   const [toggleCheckAnswer, setToggleCheckAnswer] = useState(false);
   const [preloaderStatus, setPreloaderStatus] = useState(false);
 
-  const StartNewGame = () => {
-    setToggleCheckAnswer(!toggleCheckAnswer);
-  };
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const StartNewGame = () => setToggleCheckAnswer(!toggleCheckAnswer);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const handleClick = (playerChoice) => {
     setPreloaderStatus(true);
-    setTimeout(() => {
-      setPreloaderStatus(false);
-    }, 3000);
+    setTimeout(() => setPreloaderStatus(false), 3000);
+
     setPlayersChoice(playerChoice);
     setToggleCheckAnswer(!toggleCheckAnswer);
+
     const newComputerAnswer = Math.floor(Math.random() * 3) + 1;
-    let newComputersChoice = "";
-    if (newComputerAnswer === 1) {
-      newComputersChoice = "paper";
-    } else if (newComputerAnswer === 2) {
-      newComputersChoice = "scissors";
-    } else if (newComputerAnswer === 3) {
-      newComputersChoice = "rock";
-    }
+    const newComputersChoice =
+      newComputerAnswer === 1
+        ? "paper"
+        : newComputerAnswer === 2
+        ? "scissors"
+        : "rock";
+
     setComputersChoice(newComputersChoice);
 
-    // Determine the winner and update score
     if (playerChoice === newComputersChoice) {
       setCurrentWinner("TIE");
     } else if (
@@ -55,110 +45,129 @@ const RockPaperScissors = () => {
     ) {
       setCurrentWinner("YOU WIN");
       setWinnerTextColor(true);
-      setScore(score + 1); // Increment score if player wins
+      setScore(score + 1);
     } else {
       setCurrentWinner("YOU LOSE");
       setWinnerTextColor(false);
-      if (score === 0) {
-        setScore(0);
-      } else {
-        setScore(score - 1);
-      }
+      setScore(score > 0 ? score - 1 : 0);
     }
   };
 
   return (
-    <section className={rpsCSS.Wrapper}>
-      <div
-        className={preloaderStatus ? rpsCSS.preloaderOn : rpsCSS.preloaderOff}
-      >
-        <h1>🤖Computer choosing</h1>
-      </div>
-      <div className={rpsCSS.ScoreDisplay}>
-        <img src={Logo} alt="logo" />
+    <main className={rpsCSS.Wrapper}>
+      {/* Preloader */}
+      {preloaderStatus && (
+        <section className={rpsCSS.preloaderOn}>
+          <h1>🤖 Computer choosing…</h1>
+        </section>
+      )}
+
+      {/* Scoreboard */}
+      <header className={rpsCSS.ScoreDisplay}>
+        <img src={Logo} alt="Rock Paper Scissors game logo" />
         <div>
-          <p>score</p>
+          <p>Score</p>
           <h1>{score}</h1>
         </div>
-      </div>
-      {/* Game Starts */}
-      <div
+      </header>
+
+      {/* Game Choices */}
+      <section
         className={`${rpsCSS.TheGame} ${
           toggleCheckAnswer ? rpsCSS.checking : rpsCSS.reseting
         }`}
       >
-        <div className={rpsCSS.paper} onClick={() => handleClick("paper")}>
-          <img src={PaperIcon} alt="paper" />
-        </div>
-        <div className={rpsCSS.rod}></div>
-        <div
+        <button
+          className={rpsCSS.paper}
+          onClick={() => handleClick("paper")}
+          aria-label="Choose paper"
+        >
+          <img src={PaperIcon} alt="Paper" />
+        </button>
+
+        <button
           className={rpsCSS.scissors}
           onClick={() => handleClick("scissors")}
+          aria-label="Choose scissors"
         >
-          <img src={ScissorsIcon} alt="scissors" />
-        </div>
-        <div className={rpsCSS.rod}></div>
-        <div className={rpsCSS.rock} onClick={() => handleClick("rock")}>
-          <img src={RockIcon} alt="rock" />
-        </div>
-        <div className={rpsCSS.rod}></div>
-      </div>
+          <img src={ScissorsIcon} alt="Scissors" />
+        </button>
+
+        <button
+          className={rpsCSS.rock}
+          onClick={() => handleClick("rock")}
+          aria-label="Choose rock"
+        >
+          <img src={RockIcon} alt="Rock" />
+        </button>
+      </section>
+
       {/* Result Section */}
-      <div
+      <section
         className={`${rpsCSS.resultWrapper} ${
           toggleCheckAnswer ? rpsCSS.reseting : rpsCSS.checking
         }`}
       >
-        <div className={rpsCSS.playerBox}>
-          <h3>you picked</h3>
+        <article className={rpsCSS.playerBox}>
+          <h3>You picked</h3>
           <div
             className={`${
               toggleCheckAnswer ? rpsCSS[playersChoice] : rpsCSS.default
             }`}
           >
-            <img
-              src={`/public/images/icon-${playersChoice}.svg`}
-              alt="playersChoice"
-            />
+            {playersChoice && (
+              <img
+                src={`/public/images/icon-${playersChoice}.svg`}
+                alt={`You chose ${playersChoice}`}
+              />
+            )}
           </div>
-        </div>
-        <div>
+        </article>
+
+        <article>
           <h1>{currentWinner}</h1>
           <button
-            className={`${
-              winnerTextColor ? rpsCSS.blueColor : rpsCSS.redColor
-            }`}
-            onClick={() => StartNewGame()}
+            className={winnerTextColor ? rpsCSS.blueColor : rpsCSS.redColor}
+            onClick={StartNewGame}
           >
             Play again
           </button>
-        </div>
-        <div className={rpsCSS.computerBox}>
+        </article>
+
+        <article className={rpsCSS.computerBox}>
           <h3>The house picked</h3>
           <div
             className={`${
               toggleCheckAnswer ? rpsCSS[computersChoice] : rpsCSS.default
             }`}
           >
-            <img
-              src={`/public/images/icon-${computersChoice}.svg`}
-              alt="computersChoice"
-            />
+            {computersChoice && (
+              <img
+                src={`/public/images/icon-${computersChoice}.svg`}
+                alt={`Computer chose ${computersChoice}`}
+              />
+            )}
           </div>
-        </div>
-      </div>
-      {/* Rules Button */}
-      <button onClick={openModal} className={rpsCSS.rulesBtn}>
-        rules
-      </button>
+        </article>
+      </section>
+
+      {/* Rules Modal */}
+      <footer>
+        <button onClick={openModal} className={rpsCSS.rulesBtn}>
+          Rules
+        </button>
+      </footer>
+
       {isModalOpen && (
-        <dialog open>
-          <h1>Rules</h1>
-          <img src="/public/images/image-rules.svg" alt="Rules" />
-          <button onClick={closeModal}>x</button>
+        <dialog open aria-labelledby="rules-title">
+          <h1 id="rules-title">Rules</h1>
+          <img src="/public/images/image-rules.svg" alt="Game rules" />
+          <button onClick={closeModal} aria-label="Close rules">
+            ×
+          </button>
         </dialog>
       )}
-    </section>
+    </main>
   );
 };
 
