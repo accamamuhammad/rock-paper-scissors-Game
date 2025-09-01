@@ -54,7 +54,7 @@ const RockPaperScissors = () => {
   };
 
   return (
-    <main className={rpsCSS.Wrapper}>
+    <div className={rpsCSS.Wrapper}>
       {/* Preloader */}
       {preloaderStatus && (
         <section className={rpsCSS.preloaderOn}>
@@ -167,7 +167,7 @@ const RockPaperScissors = () => {
           </button>
         </dialog>
       )}
-    </main>
+    </div>
   );
 };
 
